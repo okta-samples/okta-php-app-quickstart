@@ -59,7 +59,7 @@ function start_oauth_flow() {
     'redirect_uri' => $_ENV['OKTA_OAUTH2_REDIRECT_URI'],
     'code_challenge' => $code_challenge,
     'code_challenge_method' => 'S256',
-    'scope' => 'openid profile email',
+    'scope' => 'openid profile email offline_access',
   ]);
 
   header('Location: '.$authorize_url);
