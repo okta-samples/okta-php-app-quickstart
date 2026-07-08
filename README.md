@@ -2,19 +2,21 @@
 
 ## Prerequisites
 
-Before running this sample, you will need an Okta Developer Account. Create one using `okta register`, or configure an existing one with `okta login`.
+Before running this sample, you will need an Okta Integrator Free Plan account. To get one, sign up for an [Integrator account](https://developer.okta.com/login). Once you have an account, sign in to your [Integrator account](https://developer.okta.com/login). Next, in the Admin Console:
 
-## Create the Application in Okta
+1. Go to **Applications > Applications**
+2. Click **Create App Integration**
+3. Select **OIDC - OpenID Connect** as the sign-in method
+4. Select **Web Application** as the application type, then click **Next**
+5. Enter an app integration name, e.g. `My PHP App`
+6. Configure the redirect URIs:
+- Accept the default redirect URI values:
+- **Sign-in redirect URIs:** `http://localhost:8080/authorization-code/callback`
+- **Sign-out redirect URIs:** `http://localhost:8080`
+7. In the **Controlled access** section, select the appropriate access level
+8. Click **Save**
 
-1. Login to your Okta Admin dashboard, e.g. (https://my-account-admin.okta.com/admin/dashboard)
-2. Navigate to `Applications > Applications` in the left-hand menu.
-3. Click `Create App Integration`.
-4. For `Sign-in method` select `OIDC - OpenID Connect` and for `Application Type` select `Web Application`. Click `Next`.
-5. Use the following values for application info:
-    * For `App integration name` use `okta-php-app-quickstart`.
-    * Select `Grant type > Core grants > Refresh Token`.
-    * Select `Assignments > Controlled access > Skip group assignment for now`.
-    * Leave all other values as default.
+Creating an OIDC Web App manually in the Admin Console configures your Okta Org with the application settings. You may also need to configure trusted origins for `http://localhost:8080` in **Security > API > Trusted Origins**.
 
 ## Install Dependencies
 
@@ -24,11 +26,28 @@ composer install
 
 ## Set Application Info
 
-1. Copy the file `.env.example` to `.env` and fill in your Okta app configuration.
-    * `OKTA_OAUTH2_ISSUER`: use `https://{myOktaDomain}/oauth2/default`.
-    * `OKTA_OAUTH2_CLIENT_ID`: use the value in `Client Credentials > Client ID`.
-    * `OKTA_OAUTH2_CLIENT_SECRET`: use the only value in `CLIENT SECRETS`.
-    * `OKTA_OAUTH2_REDIRECT_URI`: use the default value (`http://localhost:8080/authorization-code/callback`).
+Copy the file `.env.example` to `.env` and fill in your Okta app configuration.
+
+```text
+OKTA_OAUTH2_ISSUER=https://dev-133337.okta.com/oauth2/default
+OKTA_OAUTH2_CLIENT_ID=0oab8eb55Kb9jdMIr5d6
+OKTA_OAUTH2_CLIENT_SECRET=myClientSecret
+OKTA_OAUTH2_REDIRECT_URI=http://localhost:8080/authorization-code/callback
+```
+
+> **Note**: Don't EVER commit `.env` into source control. Add it to the `.gitignore` file.
+
+### Where are my new app's credentials?
+
+After creating the app, you can find the configuration details on the app’s **General** tab:
+- **Client ID:** Found in the **Client Credentials** section
+- **Client Secret:** Click **Show** in the **Client Credentials** section to reveal
+- **Issuer:** Found in the **Issuer URI** field for the authorization server that appears by selecting **Security > API** from the navigation pane.
+
+## Enable Refresh Token
+
+Manually enable Refresh Token on your Okta application to avoid third-party cookies. Sign in to your Okta Developer Edition account. Press the **Admin Console** button to navigate to the Okta Admin Console. In the sidenav, navigate to **Applications** > **Applications** and find the Okta application for this project named `okta-go-api-sample`. Edit the application's **General Setting** to enable the **Refresh Token** checkbox. **Save** your changes.
+
 
 ## Run the Application
 
