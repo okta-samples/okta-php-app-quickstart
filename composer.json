@@ -1,5 +1,8 @@
 {
     "require": {
-        "vlucas/phpdotenv": "^5.4"
+        "php": "^8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "vlucas/phpdotenv": "^5.7"
     }
 }
